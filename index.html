@@ -212,7 +212,7 @@ while (foundLeak == undefined && maxCount > 0) {
 
 if (!foundLeak) {
     failed = true
-    fail("Failed to find leak!")
+    alert("Failed to find leak!")
 }
 
 var firstLeak = Array.prototype.slice.call(foundLeak, foundIndex, foundIndex + 0x40);
