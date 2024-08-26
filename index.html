@@ -5,6 +5,7 @@
 
 <script>
     function controlleduaf() {
+        while true {
         let obj = { data: "abcdefghijklmnopqrstuvwxyz" };
         let ref = obj;
         console.log("Before freeing:", ref.data);
@@ -15,8 +16,9 @@
             alert("Error:", e.message);
         }
     }
-
+    }
     function ComplexOverflow() {
+        while true {
         let largeString = "A".repeat(1000000); 
         let bufferArray = [];
         let nestedArray = [];
@@ -30,22 +32,28 @@
                 largeString = "A".repeat(1000000);
             }
         }
+        }
 
         function arrayBufferAllocation() {
+            while true {
             bufferArray.push(new ArrayBuffer(1000000));
             if (bufferArray.length > 1000) {
                 bufferArray = [];
             }
         }
+        }
 
         function handleNestedArrays() {
+               while true {
             nestedArray.push([]);
             if (nestedArray.length > 1000) {
                 nestedArray = [];
             }
         }
+        }
 
-        function handleObjectPropertyExpansion() {
+        function handleObjectPropertyExpansion(){
+            whilw true {
             obj[counter] = "A".repeat(1000);
             counter++;
             if (counter > 10000000) {
@@ -53,7 +61,7 @@
                 counter = 0;
             }
         }
-
+        }
         function checkReload() {
             counterr++;
             if (counterr >= 100) {
