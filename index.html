@@ -3,48 +3,36 @@
 <head></head>
 <body><script src="main.js">
 
-
 function heapSpray(size, count) {
-  let sprays = []; 
-  let bufferArray = []; 
-  let counter = 0;
-
-  for (var i = 0; i < count; i++) {
-    // Allocate large string
+var sprays = []; 
+    for (var i = 0; i < count; i++) {
     let largeString = "A".repeat(1000000); // 1 million A's
-
-    // Array buffer allocation
-    bufferArray.push(new ArrayBuffer(size));
-    if (bufferArray.length > 1000) {
-      bufferArray = [];
+    let obj = {};     largeString = "A".repeat(1000000);
+        // Array buffer allocation
+        bufferArray.push(new ArrayBuffer(1000000));
+        if (bufferArray.length > 1000) {
+            bufferArray = 
+ocation
+        sprays.push(new ArrayBuffer(size));
+        // Object property expansion
     }
-
-    // Object property expansion
-    let obj = {};
-    obj[counter] = "A".repeat(1000);
-    counter++;
-
-    // Push to sprays
-w heap spray
- 
-  // Number of chunks to spraychunkSize, sprayCount);
-
-  // Optional: Do something with the sprays, such as setting up data or triggering behavior
-  for (var i = 0; i < sprays.length; i++) {
+}
+function run() {
+var chunksize = 0x1000; 
+var spraycount = 0x200;
+var sprays = heapSpray(chunkSize, spraycount);
+for (var i = 0; i < sprays.length; i++){ 
     var ptr = sprays[i];
-    // Example: Write some data to each allocated memory chunk
-    // (Note: Actual memory manipulation would depend on the environment)
-    // p.write8(ptr.add32(0x100), i); // Example offset and data
-  }
-
+   p.write8(ptr.add32()0x100), i);
   return sprays;
 }
-
-// Run the heap spray initialization  
+}
+    // 
+(Note: Actual memory manipulation would depend on the environment)[];
 </script>
 
 
-<button onclick="heapSpray(9999, 9999)">RUN</button>
+<button onclick="run()">RUN</button>
 
 </body>
 </html>
