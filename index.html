@@ -17,14 +17,59 @@ alert("Start?")
   
 
 //overflow()
-    const ab = new ArrayBuffer(0x1000, {"maxByteLength": 0x4000});
-  const u8 = new Unit8Array(ab);
-  function call_back() { 
-    ab.resize(0);
-    return 0;
-  }
-  u8.copyWithib(0x20, {valueOf:call_back});
-  alert("Worked?:", {valueOf:callback});
+    function memExh() {
+    let bufferArray = [];
+    for (let i = 0; i < 32000; i++) {
+        bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers
+        if (bufferArray.length > 1000) {
+            bufferArray = []; // Clear buffer array to exhaust memory
+        }
+    }
+}
+
+function unkown() {
+    let largeString = "A".repeat(1000000); // 1 million A's
+    let nestedArray = [];
+    let obj = {};
+    let iterationCount = 0; // Counter to track number of iterations
+
+    while (true) {
+        // String concatenation
+        largeString += largeString;
+        if (largeString.length > 100000000) {
+            largeString = "A".repeat(1000000); // Reset string to avoid overflow
+        }
+
+        memExh(); // Exhaust memory
+
+        // Nested arrays
+        nestedArray.push([]);
+        if (nestedArray.length > 1000) {
+            nestedArray = []; // Clear nested arrays to exhaust memory
+        }
+
+        // Increment iteration counter
+        iterationCount++;
+
+        // Print alerts and break after 100 iterations
+        if (iterationCount === 100) {
+            try {
+                // Test accessing out-of-bounds index (conceptual; may not work directly)
+                let buffer = new ArrayBuffer(10); // Small buffer for demonstration
+                let view = new Uint8Array(buffer);
+                let outOfBoundsValue = view[view.length + 1]; // Access beyond allocated memory
+                alert("Out-of-bounds value: " + outOfBoundsValue);
+            } catch (e) {
+                alert("Error accessing out-of-bounds memory: " + e.message);
+            }
+
+            // Break the loop after alerts
+            break;
+        }
+    }
+}
+
+unkown(); // Call the function to start testing
 </script>
 </body>
 </html>
