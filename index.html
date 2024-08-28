@@ -5,16 +5,48 @@
 
 <script>
 alert("Start?")
-   for (var i = 0; i < 32000; i++) {
+  /* for (var i = 0; i < 32000; i++) {
         let largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             largeString += largeString;
             if (largeString.length > 1000000000) {
                 largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".repeat(1000000);
             }
         
-     //= 50057; /* spray 4-field Object InstanceIDs */
+     //= 50057; /* spray 4-field Object InstanceIDs
+    */
+
+   function controlleduaf() {
+    while (true) {
+        // Simulate allocation of an object
+        let obj = { data: "important data" };
+
+        // Reference to the object
+        let ref = obj;
+
+        alert("Before freeing: " + ref.data); // Output: important data
+
+        // Simulate freeing the object
+        obj = null;
+
+        try {
+            // Attempt to use the reference after the object is "freed"
+            alert("After freeing: " + ref.data); // This should fail in a true use-after-free
+        } catch (e) {
+            alert("Error: " + e.message); // Catch any errors
+        }
+    }
    }
-    
+   function overflow_string() {
+    let largeString = "A".repeat(1000000); // 1 million A's
+    for (var i = 0; i < 4096; i++) {
+        largeString += largeString; // Double the size each time
+        if (largeString.length > 1000000000) { // Adjust the threshold as needed
+            largeString = "A".repeat(1000000); // Reset to prevent immediate crash
+        }
+       controlleduaf()
+    }
+   }
+   overflow_string()
 </script>
 </body>
 </html>
