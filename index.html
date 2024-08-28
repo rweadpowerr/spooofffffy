@@ -19,7 +19,7 @@ alert("Start?")
 //overflow()
     function memExh() {
     let bufferArray = [];
-    for (let i = 0; i < 4096; i++) {
+    for (let i = 0; i < 32000; i++) {
         bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers
         if (bufferArray.length > 1000) {
             bufferArray = []; // Clear buffer array to exhaust memory
@@ -32,6 +32,7 @@ function unkown() {
     let nestedArray = [];
     let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
+    let accessResults = []; // Array to store results
 
     while (true) {
         // String concatenation
@@ -51,25 +52,32 @@ function unkown() {
         // Increment iteration counter
         iterationCount++;
 
-        // Print alerts and break after 100 iterations
+        // Test memory access and store results after 100 iterations
         if (iterationCount === 100) {
             try {
-                // Test accessing out-of-bounds index (conceptual; may not work directly)
+                // Test accessing out-of-bounds index
                 let buffer = new ArrayBuffer(10); // Small buffer for demonstration
                 let view = new Uint8Array(buffer);
                 let outOfBoundsValue = view[view.length + 1]; // Access beyond allocated memory
-                alert("Out-of-bounds value: " + outOfBoundsValue);
+                accessResults.push("Out-of-bounds value: " + outOfBoundsValue);
             } catch (e) {
-                alert("Error accessing out-of-bounds memory: " + e.message);
+                accessResults.push("Error accessing out-of-bounds memory: " + e.message);
             }
 
-            // Break the loop after alerts
+            // Break the loop after storing results
             break;
         }
+    }
+
+    // Display collected results after the loop
+    for (let result of accessResults) {
+        alert(result);
     }
 }
 
 unkown(); // Call the function to start testing
+
+
 </script>
 </body>
 </html>
