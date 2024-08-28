@@ -15,7 +15,7 @@ alert("Start?")
      //= 50057; /* spray 4-field Object InstanceIDs
     */
 
-   function controlleduaf() {
+   /*function controlleduaf() {
     for (var i = 0; i < 32000; i++) {
         // Simulate allocation of an object
         let obj = { data: "important data" };
@@ -35,10 +35,10 @@ alert("Start?")
             alert("Error: " + e.message); // Catch any errors
         }
     }
-   }
+   }*/
    function overflow_string() {
     let largeString = "A".repeat(1000000); // 1 million A's
-    for (var i = 0; i < 4096; i++) {
+    for (var i = 0; i < 8096; i++) {
         largeString += largeString; // Double the size each time
         if (largeString.length > 1000000000) { // Adjust the threshold as needed
             largeString = "A".repeat(1000000); // Reset to prevent immediate crash
@@ -48,7 +48,7 @@ alert("Start?")
      
    }
    overflow_string()
-  controlleduaf()
+  //controlleduaf()
 </script>
 </body>
 </html>
