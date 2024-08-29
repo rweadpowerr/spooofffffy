@@ -6,7 +6,6 @@
 <script>
 alert("Start?")
     while (true){
-function makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -14,7 +13,6 @@ function makeid() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
-};
 
 var instancespr = [];
 
@@ -28,23 +26,21 @@ for (var i = 0; i < 4096; i++) {
 
 var _dview;
 
-function u2d(low, hi) {
+
     if (!_dview) _dview = new DataView(new ArrayBuffer(16));
     _dview.setUint32(0, hi);
     _dview.setUint32(4, low);
     return _dview.getFloat64(0);
-}
-var dgc = function () {
+
+
     for (var i = 0; i < 0x100; i++) {
         new ArrayBuffer(0x100000);
     }
-}
 
-function int64(low, hi) {
     this.low = (low >>> 0);
     this.hi = (hi >>> 0);
 
-    this.add32inplace = function (val) {
+    this.add32inplace = function smth() {
         var new_lo = (((this.low >>> 0) + val) & 0xFFFFFFFF) >>> 0;
         var new_hi = (this.hi >>> 0);
 
@@ -55,7 +51,7 @@ function int64(low, hi) {
         this.hi = new_hi;
         this.low = new_lo;
     }
-
+smth()
     this.add32 = function (val) {
         var new_lo = (((this.low >>> 0) + val) & 0xFFFFFFFF) >>> 0;
         var new_hi = (this.hi >>> 0);
@@ -63,7 +59,6 @@ function int64(low, hi) {
         if (new_lo < this.low) {
             new_hi++;
         }
-
         return new int64(new_lo, new_hi);
     }
 
@@ -79,7 +74,7 @@ function int64(low, hi) {
     }
 
     this.sub32inplace = function (val) {
-        var new_lo = (((this.low >>> 0) - val) & 0xFFFFFFFF) >>> 0;
+        var new_lo = (((tis.low >>> 0) - val) & 0xFFFFFFFF) >>> 0;
         var new_hi = (this.hi >>> 0);
 
         if (new_lo > (this.low) & 0xFFFFFFFF) {
