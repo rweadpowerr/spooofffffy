@@ -19,7 +19,7 @@ alert("Start?")
 //overflow()
     function memExh() {
     let bufferArray = [];
-    for (let i = 0; i < 32000; i++) {
+    for (let i = 0; i < 8192; i++) {
         bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers
         if (bufferArray.length > 1000) {
             bufferArray = []; // Clear buffer array to exhaust memory
