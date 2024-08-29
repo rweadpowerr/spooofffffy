@@ -39,10 +39,12 @@ function payload() {
         // Attempt to write to memory
         try {
             let buffer = new ArrayBuffer(10); // Create a small buffer
-            let view = new Uint8Array(buffer);
-            view[11] = 255; // Attempt to write out of bounds
-            alert("Memory write success at iteration " + iterationCount);
-            break;
+    let view = new Uint8Array(buffer);
+    let index = 11; // Example index
+
+    if (index >= 0 && index < view.length) {
+        view[index] = 255; // This will be ignored, but no error is thrown
+        alert("Memory write success.");
         } 
             else {
         throw new RangeError("Index out of bounds."); // Manually throw an error if out of bounds
