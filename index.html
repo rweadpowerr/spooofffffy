@@ -42,6 +42,7 @@ function payload() {
             let view = new Uint8Array(buffer);
             view[11] = 255; // Attempt to write out of bounds
             alert("Memory write success at iteration " + iterationCount);
+            break;
         } catch (e) {
             alert("Memory write failed at iteration " + iterationCount + ": " + e.message);
         }
@@ -54,6 +55,7 @@ function payload() {
 }
 
 payload(); // This is the most important part of the function without which nothing works
+alert("Done.")
 </script>
 </body>
 </html>
