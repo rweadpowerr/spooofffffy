@@ -43,7 +43,11 @@ function payload() {
             view[11] = 255; // Attempt to write out of bounds
             alert("Memory write success at iteration " + iterationCount);
             break;
-        } catch (e) {
+        } 
+            else {
+        throw new RangeError("Index out of bounds."); // Manually throw an error if out of bounds
+            }
+        catch (e) {
             alert("Memory write failed at iteration " + iterationCount + ": " + e.message);
         }
 
