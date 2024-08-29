@@ -4,19 +4,7 @@
 <body>
 
 <script>
-alert("Start?")
- /* function overflow() {
-    let bufferArray = [];
-    for (var i = 0; i < 32000; i++) {
-        bufferArray.push(new ArrayBuffer(1000000));
-        if (bufferArray.length > 1000) {
-            bufferArray = [];
-        }
-    }
-} */
-  
-
-//overflow()
+alert("Start?");
 
 function memExh() {
     let bufferArray = [];
@@ -31,7 +19,6 @@ function memExh() {
 function payload() {
     let largeString = "A".repeat(1000000); // 1 million A's
     let nestedArray = [];
-    let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
 
     while (true) {
@@ -48,10 +35,25 @@ function payload() {
         if (nestedArray.length > 1000) {
             nestedArray = []; // Clear nested arrays to exhaust memory
         }
-    }
- payload()
- alert("Memory usage after:", process.memoryUsage().heapUsed);
 
+        // Attempt to write to memory
+        try {
+            let buffer = new ArrayBuffer(10); // Create a small buffer
+            let view = new Uint8Array(buffer);
+            view[11] = 255; // Attempt to write out of bounds
+            alert("Memory write success at iteration " + iterationCount);
+        } catch (e) {
+            alert("Memory write failed at iteration " + iterationCount + ": " + e.message);
+        }
+
+        iterationCount++;
+        if (iterationCount >= 100) {
+            break;
+        }
+    }
+}
+
+payload(); // This is the most important part of the function without which nothing works
 </script>
 </body>
 </html>
