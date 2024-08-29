@@ -17,25 +17,13 @@ alert("Start?")
   
 
 //overflow()
-    let accessResults = []; // Global array to store results
 
-function memExh(iterationCount) {
+function memExh() {
     let bufferArray = [];
-
-    for (let i = 0; i < 8192; i++) {
+    for (let i = 0; i < 32000; i++) {
         bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers
         if (bufferArray.length > 1000) {
             bufferArray = []; // Clear buffer array to exhaust memory
-
-            // Test memory access after clearing buffers
-            try {
-                let buffer = new ArrayBuffer(10); // Small buffer for demonstration
-                let view = new Uint8Array(buffer);
-                let outOfBoundsValue = view[view.length + 1]; // Access beyond allocated memory
-                accessResults.push("Out-of-bounds value at iteration " + iterationCount + ": " + outOfBoundsValue);
-            } catch (e) {
-                accessResults.push("Error accessing out-of-bounds memory at iteration " + iterationCount + ": " + e.message);
-            }
         }
     }
 }
@@ -43,6 +31,7 @@ function memExh(iterationCount) {
 function unkown() {
     let largeString = "A".repeat(1000000); // 1 million A's
     let nestedArray = [];
+    let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
 
     while (true) {
@@ -52,32 +41,15 @@ function unkown() {
             largeString = "A".repeat(1000000); // Reset string to avoid overflow
         }
 
-        iterationCount++;
-        memExh(iterationCount); // Exhaust memory and perform access test
+        memExh(); // Exhaust memory
 
         // Nested arrays
         nestedArray.push([]);
         if (nestedArray.length > 1000) {
             nestedArray = []; // Clear nested arrays to exhaust memory
         }
-
-        // Break the loop after 100 iterations
-        if (iterationCount >= 100) {
-            break;
-        }
-    }
-}
-
-// Call the main function and then display results
-unkown(); // Call the function to start testing
-
-// Use setTimeout to ensure the loop has fully completed before displaying alerts
-setTimeout(() => {
-    for (let result of accessResults) {
-        alert(result);
-    }
-}, 0);
-
+ 
+ console.log("Memory usage after:", process.memoryUsage().heapUsed);
 
 </script>
 </body>
