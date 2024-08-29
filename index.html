@@ -11,7 +11,7 @@ function memExh() {
     for (let i = 0; i < 8192; i++) {
         bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers
         if (bufferArray.length > 1000) {
-            bufferArray = []; // Clear buffer array to exhaust memory
+            bufferArray = []; // Clear buffer array to prevent memory exhaustion
         }
     }
 }
@@ -33,23 +33,22 @@ function payload() {
         // Nested arrays
         nestedArray.push([]);
         if (nestedArray.length > 1000) {
-            nestedArray = []; // Clear nested arrays to exhaust memory
+            nestedArray = []; // Clear nested arrays to prevent memory exhaustion
         }
 
         // Attempt to write to memory
         try {
             let buffer = new ArrayBuffer(10); // Create a small buffer
-    let view = new Uint8Array(buffer);
-    let index = 11; // Example index
+            let view = new Uint8Array(buffer);
+            let index = 11; // Example index
 
-    if (index >= 0 && index < view.length) {
-        view[index] = 255; // This will be ignored, but no error is thrown
-        alert("Memory write success.");
-        } 
-            else {
-        throw new RangeError("Index out of bounds."); // Manually throw an error if out of bounds
+            if (index >= 0 && index < view.length) {
+                view[index] = 255; // This will be ignored, but no error is thrown
+                alert("Memory write success.");
+            } else {
+                throw new RangeError("Index out of bounds."); // Manually throw an error if out of bounds
             }
-        catch (e) {
+        } catch (e) {
             alert("Memory write failed at iteration " + iterationCount + ": " + e.message);
         }
 
@@ -61,7 +60,7 @@ function payload() {
 }
 
 payload(); // This is the most important part of the function without which nothing works
-alert("Done.")
+alert("Done.");
 </script>
 </body>
 </html>
