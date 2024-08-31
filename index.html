@@ -65,7 +65,7 @@ function payload() {
 
         // Nested arrays
         nestedArray.push([]);
-        if (nestedArray.length > 512) { // Reduced nesting
+        if (nestedArray.length > 256) { // Reduced nesting
             nestedArray = []; // Clear nested arrays to exhaust memory
         }
 
