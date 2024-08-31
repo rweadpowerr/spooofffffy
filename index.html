@@ -54,8 +54,8 @@ function payload() {
     while (true) {
         // String concatenation
         largeString += largeString;
-        if (largeString.length > 100000000) { // Lower threshold for reset
-            largeString = "A".repeat(1000000); // Reset string to avoid overflow
+        if (largeString.length > 10000000) { // Lower threshold for reset
+            largeString = "B".repeat(1000000); // Reset string to avoid overflow
         }
 
         memExh(); // Exhaust memory
@@ -67,7 +67,7 @@ function payload() {
         }
 
         iterationCount++;
-        if (iterationCount > 100) break; // Limit iterations to avoid endless loop
+        if (iterationCount > 50) break; // Limit iterations to avoid endless loop
     }
 }
 
