@@ -10,7 +10,7 @@ alert("Start?");
 function initializeHeap() {
     //alert("Int heap")
     let buffers = [];
-    for (let i = 0; i < 4096; i++) { // Reduced allocations
+    for (let i = 0; i < 2048; i++) { // Reduced allocations
         buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
     }
     return buffers;
