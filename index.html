@@ -105,6 +105,7 @@ function performExploit() {
         if (view[i] !== 0x41) { // Check for changes from the initial pattern
             alert("Memory corruption detected at index " + i + ": " + view[i]);
         }
+        alert("Memory buffer after grooming " + i + ": " + view[i]);
     }
 }
 
