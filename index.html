@@ -8,7 +8,7 @@ alert("Start?");
 
 // Step 1: Initialize Controlled Memory
 function initializeHeap() {
-    alert("Int heap")
+    //alert("Int heap")
     let buffers = [];
     for (let i = 0; i < 512; i++) { // Reduced allocations
         buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
@@ -18,7 +18,7 @@ function initializeHeap() {
 
 // Step 2: Groom the Heap
 function groomHeap() {
-    alert("groom heap") 
+    //alert("groom heap") 
     let tempArray = [];
 
     // Allocate and deallocate in patterns
