@@ -22,13 +22,14 @@ function groomHeap() {
     let tempArray = [];
 
     // Allocate and deallocate in patterns
-    for (let i = 0; i < 512; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(10000); // Allocate smaller blocks
+    for (let i = 0; i < 4096; i++) { // Reduced iterations
+        let buffer = new ArrayBuffer(10); // Allocate smaller blocks
         tempArray.push(buffer);
+        
     }
 
     // Deallocate some of the buffers to create holes in the heap
-    for (let i = 0; i < 256; i++) { // Fewer deallocations
+    for (let i = 0; i < 4096; i++) { // Fewer deallocations
         tempArray[i] = null; // Free up space to create holes in the heap
     }
 
