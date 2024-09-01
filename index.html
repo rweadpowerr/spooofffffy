@@ -23,7 +23,7 @@ function groomHeap() {
 
     // Allocate and deallocate in patterns
     for (let i = 0; i < 512; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(900000); // Allocate smaller blocks
+        let buffer = new ArrayBuffer(10000); // Allocate smaller blocks
         tempArray.push(buffer);
     }
 
