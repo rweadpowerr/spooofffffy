@@ -6,12 +6,14 @@
 <script>
 alert("Start?");
 let a, se_a, c, se_c;
+let UUU = 1;
 // Step 1: Initialize Controlled Memory
 function initializeHeap() {
     //alert("Int heap");
     let buffers = [];
     for (let i = 0; i < 1024; i++) { // Reduced allocations
-        buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
+        UUU++;
+        buffers.push(new ArrayBuffer(UUU)); // Smaller blocks of memory
     }
     return buffers;
 }
