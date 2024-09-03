@@ -47,20 +47,21 @@ function memExh() {
     let c = new ArrayBuffer(32);
     let se_c = new Uint8Array(c);
     let bufferArray = [];
-    for (let i = 0; i < 1048; i++) { // Reduced iterations
-        bufferArray.push(new ArrayBuffer(900000)); // Allocate smaller buffers
-        if (bufferArray.length > 512) { // Less aggressive clearing
-            bufferArray = []; // Clear buffer array to exhaust memory
-alert("a")
-            // Double-free memory
-            let a = null;
+    let a = null;
             let b = null;
+    for (let i = 0; i < 1048; i++) { // Reduced iterations
+        bufferArray.push(new ArrayBuffer(1000000)); // Allocate smaller buffers
+        if (bufferArray.length > 2048) { // Less aggressive clearing
+            bufferArray = []; // Clear buffer array to exhaust memory
+//alert("a")
+            // Double-free memory
+            let a null;
             //let a = null;
             // Fill with known data
             for (let j = 0; j < se_a.length; j++) {
                 se_a[j] = 0x41; // Fill with 'A'
             }
-            alert("Memory buffer after grooming " + i + ": " + se_c[i]);
+       
         }
     }
 }
