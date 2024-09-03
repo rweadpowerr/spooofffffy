@@ -42,9 +42,7 @@ let varx = 1*(100^100)
 function memExh() {
     let a = new ArrayBuffer(varx);
     let se_a = new Uint8Array(a); // View it as an array of bytes
-    let b = new ArrayBuffer(32);
-    let se_b = new Uint8Array(b);
-    let c = new ArrayBuffer(32);
+let c = new ArrayBuffer(32);
     let se_c = new Uint8Array(c);
     let bufferArray = [];
     for (let i = 0; i < 1048; i++) { // Reduced iterations
@@ -57,7 +55,8 @@ function memExh() {
             //let a = null;
             // Fill with known data
             for (let j = 0; j < se_a.length; j++) {
-                se_a[j] = 0x42; // Fill with 'A'
+                se_a[UUU] = 0x42; // Fill with 'A'
+                break;
             }
        
         }
