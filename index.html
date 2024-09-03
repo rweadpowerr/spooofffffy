@@ -12,8 +12,8 @@ function initializeHeap() {
     //alert("Int heap");
     let buffers = [];
     for (let i = 0; i < 1024; i++) { // Reduced allocations
-        UUU++;
-        buffers.push(new ArrayBuffer(UUU)); // Smaller blocks of memory
+        
+        buffers.push(new ArrayBuffer(1000)); // Smaller blocks of memory
     }
     return buffers;
 }
@@ -24,13 +24,14 @@ function groomHeap() {
     let tempArray = [];
 
     // Allocate and deallocate in patterns
-    for (let i = 0; i < 2048; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(10000); // Allocate smaller blocks
+    for (let i = 0; i < 4096; i++) { // Reduced iterations
+        let buffer = new ArrayBuffer(UUU); // Allocate smaller blocks
         tempArray.push(buffer);
+        UUU++;
     }
 
     // Deallocate some of the buffers to create holes in the heap
-    for (let i = 0; i < 1512; i++) { // Fewer deallocations
+    for (let i = 0; i < 2048; i++) { // Fewer deallocations
         tempArray[i] = null; // Free up space to create holes in the heap
     }
 
