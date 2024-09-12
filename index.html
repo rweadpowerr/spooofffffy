@@ -170,9 +170,9 @@ function exploitBufferOverflow() {
     // Let's simulate it by just filling the buffer
     try {
         uint8Array.fill(1, initialSize, newSize);
-        console.log("Buffer successfully overflowed!");
+        alert("Buffer successfully overflowed!");
     } catch (e) {
-        console.error("Failed to overflow the buffer:", e);
+        alert("Failed to overflow the buffer:", e);
     }
 }
 
