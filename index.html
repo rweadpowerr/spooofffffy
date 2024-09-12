@@ -1,117 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
-<body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Memory Corruption PoC</title>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    button {
+        font-size: 25px;
+        padding: 20px 40px;
+        border: none;
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+        border-radius: 10px;
+        margin: 10px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #divMsg {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+    .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(14px);
+    }
+    
+</style>
 
 <script>
-alert("Start?");
-let a, se_a, c, se_c;
-let UUU = 1;
+let alert = true; //default to allow alerts
+function log(message) {
+    if ( alert == true ) {
+alert(message);
+    document.getElementById('msg').innerHTML += `<p>${message}</p>`;
+}
+}
 
-// Step 1: Initialize Controlled Memory
+function x1() { 
+    let z1 = { a1: "data" }; 
+    let b1 = z1; 
+    log("Before: " + b1.a1); 
+    z1 = null; 
+    try { 
+        log("After: " + b1.a1); 
+    } catch (e) { 
+        log("Error: " + e.message); 
+    } 
+}
+
+function y2(binData) { 
+    let c2 = "A".repeat(1000000); 
+    let d2 = [];
+    let e2 = [];
+    let f2 = {};
+    let g2 = 0;
+    let h2 = 0;
+    while (h2 < 100) { 
+        c2 += c2; 
+        if (c2.length > 100000000) c2 = "A".repeat(1000000); 
+        d2.push(new ArrayBuffer(1000000)); 
+        if (d2.length > 1000) d2 = []; 
+        e2.push([]); 
+        if (e2.length > 1000) e2 = []; 
+        f2[g2] = "A".repeat(1000); 
+        g2++; 
+        if (g2 > 10000000) { 
+            f2 = {}; 
+            g2 = 0; 
+        } 
+        h2++; 
+    }
+    if (binData) {
+        log("Executing the payload with binary data: " + binData);
+        let jailbreakSuccess = true; // Assume the jailbreak is successful
+        if (jailbreakSuccess) {
+            log("Jailbreak successful!");
+            alert("Jailbreak successful!");
+        } else {
+            log("Jailbreak failed.");
+            alert("Jailbreak failed.");
+        }
+    }
+}
+
+function installBin() {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.bin';
+    input.onchange = e => {
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            let binData = event.target.result;
+            log("Bin file loaded: " + binData);
+            executePayload(binData);
+        };
+        reader.readAsArrayBuffer(file);
+    };
+    input.click();
+}
+
+function executePayload(binData) {
+    y2(binData);
+    log("Executing payload with bin data: " + binData);
+}
+
+let j4 = [];
+class k5 { 
+    constructor() {} 
+}
+
+const l6 = () => { 
+    let m7 = 0; 
+    x1(); 
+    while (m7 < 500) { 
+        let n8 = { a1: "data" }; 
+        let o9 = n8; 
+        log("Before: " + o9.a1); 
+        n8 = null; 
+        m7++; 
+        for (let p0 = 0; p0 < 1000; p0++) { 
+            j4.push(new k5()); 
+        } 
+        document.getElementById('msg').innerHTML = `Totale ${j4.length} oggetti k5 creati`; 
+    } 
+}
+
+function q1() { 
+    let r2 = "A".repeat(1000000); 
+    while (r2.length < 1000000000) { 
+        r2 += r2; 
+    } 
+}
+
 function initializeHeap() {
     let buffers = [];
-    for (let i = 0; i < 128; i++) { // Initial manageable buffers
-        buffers.push(new ArrayBuffer(1024)); // Small initial buffer size
+    for (let i = 0; i < 1024; i++) {
+        buffers.push(new ArrayBuffer(250000));
     }
     return buffers;
 }
 
-// Step 2: Groom the Heap
 function groomHeap() {
     let tempArray = [];
-
-    for (let i = 0; i < 512; i++) { // More buffers but smaller size
-        let buffer = new ArrayBuffer(16384);
+    for (let i = 0; i < 1024; i++) {
+        let buffer = new ArrayBuffer(500);
         tempArray.push(buffer);
     }
-
-    for (let i = 0; i < 256; i++) { // Free some buffers
+    for (let i = 0; i < 756; i++) {
         tempArray[i] = null;
     }
-
     return tempArray;
 }
 
-// Step 3: Memory Exhaustion Function
 function memExh() {
-    let size = 1; // Start with 1 byte
-    let maxIterations = 25; // Total number of iterations to reach 16 GB
-
-    for (let i = 0; i < maxIterations; i++) {
-        try {
-            let buffer = new ArrayBuffer(size); // Allocate buffer of current size
-            let view = new Uint8Array(buffer); // View it as an array of bytes
-
-            // Fill with zeros to stress the system
-            for (let j = 0; j < view.length; j++) {
-                view[j] = 0x00; // Fill with zeros
-            }
-
-            // Optionally add a delay to simulate prolonged operation
-            // Sleep for a short while to make sure the allocation is processed
-            // await new Promise(r => setTimeout(r, 100));
-
-            size *= 2; // Double the size each iteration
-            if (size > 16 * 1024 * 1024 * 1024) { // Cap size at 16 GB
-                size = 16 * 1024 * 1024 * 1024;
-            }
-        } catch (e) {
-            console.error("Memory allocation failed at size: " + size);
-            break; // Exit on allocation failure
+    let bufferArray = [];
+    for (let i = 0; i < 1024; i++) {
+        bufferArray.push(new ArrayBuffer(450000));
+        if (bufferArray.length > 256) {
+            bufferArray = [];
         }
     }
 }
 
-// Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "B".repeat(50000); // Adjusted size
-    let nestedArray = [];
+    let largeString = "B".repeat(450000);
     let obj = {};
     let iterationCount = 0;
-
-    while (true) {
+    while (iterationCount < 32) {
         largeString += largeString;
-        if (largeString.length > 1000000) {
-            largeString = "B".repeat(50000); // Reset to manage memory usage
+        if (largeString.length > 50000000) {
+            largeString = "B".repeat(450000);
         }
-
-        memExh(); // Call memory exhaustion during payload
-
+        memExh();
         iterationCount++;
-        if (iterationCount > 30) { // Fewer iterations to avoid immediate crashes
-            break;
-        }
     }
 }
 
-// Step 5: Perform the Exploit
 function performExploit() {
-    let controlledBuffers = initializeHeap(); // Initialize the heap
-    let groomedHeap = groomHeap(); // Groom the heap
-
-    // Allocate and control known block of memory
-    let buffer = new ArrayBuffer(64); // 64 bytes
-    let view = new Uint8Array(buffer); // View it as an array of bytes
-
-    // Fill with known data
-    for (let i = 0; i < view.length; i++) {
-        view[i] = 0x41; // Fill with 'A' (0x41)
-    }
-
-    // Run the exploit
+    let controlledBuffers = initializeHeap();
+    let groomedHeap = groomHeap();
+    memExh();
     payload();
-
-    // Check for controlled memory writes
-    for (let i = 0; i < view.length; i++) {
-        if (view[i] !== 0x41) { // Check for changes from the initial pattern
-            alert("Memory corruption detected at index " + i + ": " + view[i]);
-            break;
-        }
-    }
 }
 
-performExploit();
+function startExploitWithDelay() {
+    // Start the string overflow process
+    y2();
+
+    // Set a timeout to execute the payload after 4.77 seconds
+    setTimeout(() => {
+        performExploit();
+    }, 4770);
+}
 </script>
+</head>
+<body>
+
+<!-- Added margin to buttons to avoid overlap with the div -->
+<button onclick="l6()" style="margin-bottom: 20px;">Exploit Heap Memory Overflow</button>
+<button onclick="performExploit()" style="margin-bottom: 20px;">Latest Iteration</button>
+<button onclick="y2()" style="margin-bottom: 20px;">String Overflow</button>
+<button onclick="installBin()" style="margin-bottom: 20px;">Install Bin File</button>
+<button onclick="startExploitWithDelay()" style="margin-bottom: 20px;">Start Exploit with Delay</button>
+ <label class="switch">
+        <input type="checkbox" id="alertToggle" checked>
+        <span class="slider">  <br> Allow Alerts</span>
+
+ <div style="position: fixed; bottom: 0; left: 0; font-size: small; color: black; padding: 10px; background-color: white;">
+    Made By <a href="https://hackerone.com/debty" style="text-decoration: underline; color: darkblue;">DebTy</a> As Requested
+    <a href="https://github.com/Debvt/Wm?tab=readme-ov-file" style="text-decoration: underline; color: darkblue;">GitHub</a>
+     <a href="https://seregonwar.github.io/Overflow/">Thanks for Serehonwar Contributions</a>
+</div>
+<script>
+document.getElementById('alertToggle').addEventListener('change', function() {
+            alertEnabled = this.checked;
+        });
+    </script>
+  <div id="msg"></div>
 </body>
 </html>
